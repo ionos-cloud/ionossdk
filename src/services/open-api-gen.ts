@@ -12,7 +12,6 @@ export class OpenApiGen {
 
   protected jarPath: string | undefined = undefined
 
-  /* eslint-disable-next-line no-useless-constructor */
   constructor(protected genConfig: GenConfig, protected sdkAssets: SdkAssets, protected fileCache?: FileCache) {
   }
 
@@ -87,8 +86,8 @@ export class OpenApiGen {
 
     response.data.pipe(writer)
 
-    return new Promise((resolve, reject) => {
-      writer.on('finish', resolve)
+    return new Promise<void>((resolve, reject) => {
+      writer.on('finish', () => resolve())
       writer.on('error', reject)
     })
   }

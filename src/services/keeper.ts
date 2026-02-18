@@ -1,17 +1,15 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import * as rimraf from 'rimraf'
 import ui from './ui'
 
 export class Keeper {
 
   protected tmpDir = ''
 
-  /* eslint-disable-next-line no-useless-constructor */
   constructor(protected rootDir: string, protected fileList: string[]) { }
 
   public save() {
-    if (this.tmpDir.length !== 0) {
+    if (this.tmpDir.length > 0) {
       throw new Error('[keeper]: save() called twice; already preserving a list of files')
     }
 
@@ -31,7 +29,7 @@ export class Keeper {
     ui.debug(`[keeper]: restoring [ ${this.fileList.join(',')} ]`)
     this.copyFromTo(this.tmpDir, this.rootDir)
 
-    rimraf.sync(this.tmpDir)
+    fs.rmSync(this.tmpDir, { recursive: true, force: true })
     this.tmpDir = ''
   }
 

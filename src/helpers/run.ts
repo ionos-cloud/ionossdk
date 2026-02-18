@@ -1,4 +1,4 @@
-import * as execa from 'execa'
+import execa from 'execa'
 import ui from '../services/ui'
 import runConfig from '../models/run-config'
 
@@ -22,14 +22,14 @@ export async function run(cmd: string, args: any[] = [],
   try {
     ui.debug(`running ${cmdStr}`)
     if (runConfig.debug) {
-      subprocess.stdout.pipe(process.stdout)
-      subprocess.stderr.pipe(process.stderr)
+      subprocess.stdout?.pipe(process.stdout)
+      subprocess.stderr?.pipe(process.stderr)
     }
     await subprocess
 
-  } catch (error) {
-    // ui.print(error.all)
+  } catch (error: unknown) {
     ui.error(`command ${cmdStr} failed!`)
-    throw new Error(error.message)
+    const message = error instanceof Error ? error.message : String(error)
+    throw new Error(message)
   }
 }

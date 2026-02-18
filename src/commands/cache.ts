@@ -1,3 +1,4 @@
+import {Args} from '@oclif/core'
 import BaseCommand from '../base/base-command'
 import ui from '../services/ui'
 import {FileCache} from '../services/file-cache'
@@ -5,20 +6,14 @@ import {FileCache} from '../services/file-cache'
 export default class Cache extends BaseCommand {
   static description = 'cache management'
 
-  static flags = {
-    ...BaseCommand.flags
-  }
-
-  static args = [
-    ...BaseCommand.args,
-    {
-      name: 'operation',
+  static args = {
+    operation: Args.string({
       required: true,
       description: 'cache operation to perform',
       hidden: false,
       options: ['clear', 'info']
-    }
-  ]
+    })
+  }
 
   async run() {
 

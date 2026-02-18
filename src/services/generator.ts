@@ -10,7 +10,6 @@ export class Generator {
 
   protected sdkAssets: SdkAssets
 
-  /* eslint-disable-next-line no-useless-constructor */
   constructor(protected genConfig: GenConfig, protected fileCache: FileCache) {
     this.sdkAssets = new SdkAssets(genConfig)
   }
@@ -29,7 +28,7 @@ export class Generator {
 
     const preservedFilesVar = this.sdkAssets.getVars().get('preservedFiles')
     let preservedFiles: string[] = []
-    if (preservedFilesVar !== undefined && preservedFilesVar.length !== 0 && Array.isArray(preservedFilesVar)) {
+    if (preservedFilesVar !== undefined && preservedFilesVar.length > 0 && Array.isArray(preservedFilesVar)) {
       preservedFiles = preservedFilesVar as string[]
     }
 
@@ -44,8 +43,7 @@ export class Generator {
     ui.info('running pre-gen script')
     await this.sdkAssets.runPreGenScript()
 
-    const openApiGen = new OpenApiGen(this.genConfig, this.sdkAssets,
-      this.genConfig.noCache ? undefined : this.fileCache)
+    const openApiGen = new OpenApiGen(this.genConfig, this.sdkAssets, this.genConfig.noCache ? undefined : this.fileCache)
     this.sdkAssets.shellEnv.IONOS_SDK_JAR_PATH = await openApiGen.getJarPath()
 
     if (this.sdkAssets.hasGenScript()) {
