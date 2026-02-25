@@ -12,15 +12,15 @@ export class GenConfig {
   artifactId = ''
 
   public forceAbsPaths() {
-    if (!this.assetsDir.startsWith('/')) {
+    if (!path.isAbsolute(this.assetsDir)) {
       this.assetsDir = path.join(process.cwd(), this.assetsDir)
     }
 
-    if (!this.specFile.startsWith('/')) {
+    if (!path.isAbsolute(this.specFile)) {
       this.specFile = path.join(process.cwd(), this.specFile)
     }
 
-    if (!this.outputDir.startsWith('/')) {
+    if (!path.isAbsolute(this.outputDir)) {
       this.outputDir = path.join(process.cwd(), this.outputDir)
     }
   }

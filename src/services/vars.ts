@@ -1,4 +1,4 @@
-import * as YAML from 'yaml'
+import YAML from 'yaml'
 import * as fs from 'fs'
 
 const ENV_VAR_PREFIX = 'IONOS_SDK_'

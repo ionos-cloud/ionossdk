@@ -9,8 +9,9 @@ export async function jsonRead(file: string): Promise<Record<any, any>> {
   const str = readFileSync(file).toString()
   try {
     return JSON.parse(str)
-  } catch (error) {
-    throw new Error(`error decoding json from ${file}: ${error.message}`)
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error)
+    throw new Error(`error decoding json from ${file}: ${message}`)
   }
 
 }
@@ -23,4 +24,3 @@ export function serialize(obj: Record<string, any>, indent = DEFAULT_JSON_INDENT
 export async function normalizeFile(file: string, indent = DEFAULT_JSON_INDENT): Promise<string> {
   return serialize(await jsonRead(file), indent)
 }
-

@@ -2,11 +2,9 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as crypto from 'crypto'
 import ui from './ui'
-import * as rimraf from 'rimraf'
 
 export class FileCache {
 
-  /* eslint-disable-next-line no-useless-constructor */
   constructor(protected cacheDir: string) { }
 
   protected logPrefix = '[file-cache]: '
@@ -51,7 +49,7 @@ export class FileCache {
   }
 
   public clear() {
-    rimraf.sync(this.cacheDir)
+    fs.rmSync(this.cacheDir, { recursive: true, force: true })
     fs.mkdirSync(this.cacheDir, { recursive: true })
   }
 }

@@ -1,12 +1,9 @@
 import runConfig from '../models/run-config'
-import cli from 'cli-ux'
+import {ux} from '@oclif/core'
 import * as json from './json'
-
-const indent = ''
-const chalk = require('chalk');
+import chalk from 'chalk'
 
 function warning(msg: string) {
-  // eslint-disable-next-line no-console
   if (process.stderr.isTTY) {
     process.stderr.write(`${chalk.yellowBright('! WARNING:')} ${chalk.yellow(msg)}\n`)
   } else {
@@ -15,7 +12,6 @@ function warning(msg: string) {
 }
 
 function error(msg: string) {
-  // eslint-disable-next-line no-console
   if (process.stderr.isTTY) {
     process.stderr.write(`${chalk.red('! ERROR:')} ${chalk.redBright(msg)}\n`)
   } else {
@@ -24,23 +20,21 @@ function error(msg: string) {
 }
 
 function info(msg: string) {
-  // eslint-disable-next-line no-console
-  cli.info(`${indent}❯ ${msg}`)
+  ux.info(`❯ ${msg}`)
 }
 
 function debug(msg: string) {
   if (runConfig.debug) {
-    // eslint-disable-next-line no-console
     if (process.stderr.isTTY) {
-      process.stderr.write(`${indent}${chalk.gray('⇢ (debug)')} ${chalk.gray(msg)}\n`)
+      process.stderr.write(`${chalk.gray('⇢ (debug)')} ${chalk.gray(msg)}\n`)
     } else {
-      process.stderr.write(`${indent}⇢ (debug) ${msg}\n`)
+      process.stderr.write(`⇢ (debug) ${msg}\n`)
     }
   }
 }
 
 function success(msg: string) {
-  process.stdout.write(chalk.greenBright(`${indent}✔ ${msg}\n`))
+  process.stdout.write(chalk.greenBright(`✔ ${msg}\n`))
 }
 
 function eol() {
